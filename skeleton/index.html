@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Register</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 10%">
+        <h4>Signup</h4>
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <form id="registration">
+      <br> Name:
+      <br>
+      <input type="text" name="name" id="name">
+      <br> Number:
+      <br>
+      <input type="text" name="number" id="number">
+      <br> Username:
+      <br>
+      <input type="text" name="username" id="username">
+      <br> Password:
+      <br>
+      <input type="password" name="password" id="password">
+    </form>
+    <input class="button-primary" type="button" value="submit" id="button">
+  </div>
+</body>
+<script>
+// $(document).ready(function() {
+//   $("#username").val(Math.random()),
+//   $("#password").val(Math.random()),
+//   $("#name").val(Math.random())
+// }); 
+var endpoint = "http://localhost:3000";
+
+$("#password").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#button").click();
+    }
+});
+
+$("#button").click(function() {
+  var body = {
+    username: $("#username").val(),
+    password: $("#password").val(),
+    name: $("#name").val(),
+    number: $("#number").val()
+  };
+
+  $.ajax({
+    type: "POST",
+    url: endpoint + "/register",
+    data: body,
+    success: function(response) {
+      console.log(response);
+      alert("Account Created")
+      window.open("http://localhost:3010/login.html", '_self')
+    },
+    error: function(response) {
+      var json = response.responseJSON;
+      alert("Error, No Input")
+      console.log(response);
+    }
+  });
+
+  //$.post(endpoint + "/register", body, function(response) {
+  //console.log(response);
+  //});
+
+});
+</script>
+
+</html>

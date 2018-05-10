@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Contacts</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 10%" float="left">
+        <h4>Contacts</h4>
+      </div>
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>number</th>
+            <th>edit</th>
+          </tr>
+        </thead>
+        <tbody id="renderhere"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 5%" float="left">
+        <h4>Add Contact</h4>
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column">
+        <form action="contacts.html" method="post">
+          <br> Name:
+          <br>
+          <input type="text" name="Name" id="name">
+          <br> Number:
+          <br>
+          <input type="text" name="Number" id="number">
+          <br>
+          <br>
+        </form>
+        <div id="error"></div>
+        <input class="button-primary" type="submit" value="Add Contact" id="add">
+      </div>
+      <!-- <div class="one-half column">
+        <form action="contacts.html" method="post">
+          <br> Name:
+          <br>
+          <input type="text" name="Name" id="Name">
+          <br> Number:
+          <br>
+          <input type="text" name="Number" id="Number">
+          <br>
+          <br>
+        </form>
+        <div id="error"></div>
+        <input class="button-primary" type="submit" value="Edit Contact" id="edit">
+      </div> -->
+    </div>
+  </div>
+</body>
+<script>
+var endpoint = "http://localhost:3000";
+
+$(document).ready(function() {
+
+  $.ajax({
+    type: "GET",
+    url: endpoint + "/contacts",
+    beforeSend: function(request) {
+      // before the request is made to the api, read the key and secret from
+      // cookies and append to the request headers.
+      request.setRequestHeader('X-Test-Key', $.cookie("Key"));
+      request.setRequestHeader('X-Test-Secret', $.cookie("Secret"));
+    },
+    success: function(response) {
+      alert("Contacts Loaded")
+      console.log(response);
+      /* Checks User ID then sends the data to the table on webpage. */
+      for (var i = 0; i < response.length; i++) {
+        $("#renderhere").append("<tr><td>" + response[i].id + "</td><td>" + response[i].name + "</td><td>" + response[i].number + "</td>" + "<td><div><button id='deletecontact' class='delete' data-id='" + response[i].id + "'>delete user</button></div>" + "</td></tr>")
+      }
+      $("#deletecontact").click(function(e) {
+        var id = $(e.target).attr('data-id');
+        $.ajax({
+          type: "DELETE",
+          url: endpoint + "/contact/" + id,
+          beforeSend: function(request) {
+            // before the request is made to the api, read the key and secret from
+            // cookies and append to the request headers.
+            request.setRequestHeader('X-Test-Key', $.cookie("Key"));
+            request.setRequestHeader('X-Test-Secret', $.cookie("Secret"));
+          },
+          success: function(response) {
+            console.log(response);
+            $("#deletecontact").closest('tr').remove();
+            alert("Contact Deleted")
+          },
+          error: function(response) {
+            var json = response.responseJSON;
+            alert("Error, No Input")
+            console.log(response);
+          }
+        });
+      });
+    },
+    error: function(response) {
+      var json = response.responseJSON;
+      console.log(json);
+    }
+  });
+  // ajax delete request to api
+  // on success remove the tr.
+
+$("#number").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#add").click();
+    }
+});
+  $("#add").click(function() {
+    var body = {
+      name: $("#name").val(),
+      number: $("#number").val(),
+    };
+    $.ajax({
+      type: "POST",
+      url: endpoint + "/contact",
+      data: body,
+      beforeSend: function(request) {
+        // before the request is made to the api, read the key and secret from
+        // cookies and append to the request headers.
+        request.setRequestHeader('X-Test-Key', $.cookie("Key"));
+        request.setRequestHeader('X-Test-Secret', $.cookie("Secret"));
+      },
+      success: function(response) {
+        $("#renderhere").append("<tr><td>" + response.id + "</td><td>" + response.name + "</td><td>" + response.number + "</td>" + "<td><div><button id='deletecontact' class='delete' data-id='" + response.id + "''>delete user </button></div>" + "</td></tr>")
+        alert("Contact Added!")
+      },
+      error: function(response) {
+        var json = response.responseJSON;
+        alert("Error, No Input.")
+        console.log(response);
+      }
+    });
+  });
+});
+// $('button.deletecontact').click(function(){ $(this).closest('tr').remove();
+
+// make a get request to fetch contacts. 
+// on success loop each contact in contacts
+// append a <tr> to the table with contact information.
+</script>
+
+</html>

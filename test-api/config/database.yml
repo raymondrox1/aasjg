@@ -1,0 +1,24 @@
+production:
+  adapter: mysql2
+  database: test
+  host: 127.0.0.1
+  username: root
+  password: password
+  encoding: utf8mb4
+  port: 3306
+development:
+  adapter: mysql2
+  database: test
+  host: 127.0.0.1
+  username: root
+  password: password
+  encoding: utf8mb4
+  port: 3306
+test:
+  adapter: mysql2
+  database: test
+  host: 127.0.0.1
+  username: root
+  password: password
+  encoding: utf8mb4
+  port: 3306

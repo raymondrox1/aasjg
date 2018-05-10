@@ -1,0 +1,45 @@
+require_relative 'config/application'
+
+Rails.application.load_tasks
+
+task :rspec => 'ci:setup:rspec'
+
+task :build_schema do
+
+  # prevents task from running in production environment.
+  if Rails.env == 'production'
+    return
+  end
+
+  path = 'config/database.yml'
+  file = File.read(path)
+  connection = YAML.load(ERB.new(file).result)['development']
+  ActiveRecord::Base.establish_connection(connection)
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+  schemas = %w(assessment bronze)
+  schemas.each do |schema|
+    sql = File.read("db/#{schema}.sql")
+    sql.split(';').each do |statement|
+      ActiveRecord::Base.connection.execute(statement)
+    end
+  end
+
+  if Rails.env == 'test'
+
+    # drop all foreign keys that were created from the schema file so rspec test
+    # suite can run with transactional fixtures turned on.
+    query = "SELECT concat('USE ', TABLE_SCHEMA, '; ALTER TABLE `',
+    TABLE_NAME, '` DROP FOREIGN KEY ', CONSTRAINT_NAME, ';')
+    FROM information_schema.key_column_usage
+    WHERE CONSTRAINT_SCHEMA in ('assessment', 'bronze')
+    AND referenced_table_name IS NOT NULL;"
+
+    output = ActiveRecord::Base.connection.execute(query)
+    output.each do |sql|
+      sql[0].split(';').each do |statement|
+        ActiveRecord::Base.connection.execute(statement)
+      end
+    end
+  end
+end

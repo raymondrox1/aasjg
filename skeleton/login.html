@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Log In</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 10%">
+        <h4>Login</h4>
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <form action="index.html" method="post">
+      username:
+      <br>
+      <input type="text" name="username" id="username">
+      <br> password:
+      <br>
+      <input type="password" name="password" id="password">
+      <br>
+    </form>
+    <div id="error"></div>
+    <input class="button-primary" type="submit" value="Login" id="login">
+  </div>
+</body>
+<script>
+var endpoint = "http://localhost:3000";
+
+$("#password").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#login").click();
+    }
+});
+
+$("#login").click(function() {
+
+  var body = {
+    username: $("#username").val(),
+    password: $("#password").val()
+  };
+
+  $.ajax({
+    type: "POST",
+    url: endpoint + "/login",
+    data: body,
+    success: function(response) {
+
+      // save in cookies the key that the api has responded with.
+      $.cookie("Key", response.key);
+      $.cookie("Secret", response.secret);
+
+      // navigate to the contacts page.
+      window.location = "/contacts.html"
+    },
+    error: function(response) {
+      var json = response.responseJSON;
+      console.log(json);
+    }
+  });
+
+  // $.post(endpoint + "/login", body, function(response) {
+  //   console.log(response);
+  // });
+
+});
+</script>
+
+</html>

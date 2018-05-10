@@ -1,0 +1,23 @@
+source 'https://rubygems.org'
+
+gem 'rails', '5.1.4'
+gem 'mysql2'
+gem 'bcrypt'
+gem 'puma'
+gem 'grape'
+gem 'rack-cors'
+gem 'aws-sdk'
+gem 'rake'
+gem 'mustache'
+gem 'mandrill-api'
+gem 'tzinfo-data'
+gem 'bcrypt'
+
+group :test, :development do
+  gem 'byebug'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'faker'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+end

@@ -1,0 +1,98 @@
+Started GET "/" for 127.0.0.1 at 2017-12-05 16:17:26 +1000
+Started GET "/favicon.ico" for 127.0.0.1 at 2017-12-05 16:17:27 +1000
+Started GET "/" for 127.0.0.1 at 2017-12-07 10:17:57 +1000
+Started GET "/favicon.ico" for 127.0.0.1 at 2017-12-07 10:17:57 +1000
+Started GET "/index.html" for 127.0.0.1 at 2017-12-07 10:18:24 +1000
+Started GET "/index.html" for 127.0.0.1 at 2017-12-07 10:29:39 +1000
+Started GET "/" for 127.0.0.1 at 2017-12-07 10:33:14 +1000
+Started GET "/index.html" for 127.0.0.1 at 2017-12-07 10:33:39 +1000
+Started GET "/" for ::1 at 2017-12-07 10:56:32 +1000
+Started POST "/register" for ::1 at 2017-12-07 10:56:55 +1000
+  [1m[35m (42.1ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[36mModels::Account Load (35.1ms)[0m  [1m[34mSELECT `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'root'[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `username`, `password`, `created`) VALUES ('5c732a72ee21bac317fe411323d37126', 'root', '$2a$10$G.TRgZeTWo0AZwxvKbg.PO1iRILN5tGkZwMHbwfwdHzi3dm4F/YcG', '2017-12-07 00:56:59')[0m
+  [1m[35m (32.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.7ms)[0m  [1m[32mINSERT INTO `profiles` (`user_id`, `name`) VALUES ('5c732a72ee21bac317fe411323d37126', 'raymond')[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('5c732a72ee21bac317fe411323d37126', 'raymond', '0414918001')[0m
+  [1m[35m (24.3ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/login" for ::1 at 2017-12-07 10:58:32 +1000
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[36mModels::Account Load (1.0ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'root' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (16.6ms)[0m  [1m[32mINSERT INTO `keys` (`key`, `secret`, `user_id`) VALUES ('eee23e73af75a37d18868a0588f1b8ae', '$2a$10$lHYNSJC.1dMkXJGPyClgS.h3qsPs/ZMPWJbJ2iuymC3k.mfwT9ahW', '5c732a72ee21bac317fe411323d37126')[0m
+  [1m[35m (25.9ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/contacts" for ::1 at 2017-12-07 10:58:33 +1000
+  [1m[36mModels::Key Load (0.3ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = 'eee23e73af75a37d18868a0588f1b8ae' LIMIT 1[0m
+  [1m[36mModels::Contact Load (1.0ms)[0m  [1m[34mSELECT `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = '5c732a72ee21bac317fe411323d37126'[0m
+Started POST "/login" for ::1 at 2017-12-07 11:02:21 +1000
+  [1m[36mModels::Account Load (0.5ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'root' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO `keys` (`key`, `secret`, `user_id`) VALUES ('2e089ca96fad13ef2041f85e359a74e8', '$2a$10$.dhfXEkZdfvuyyi7drBJIOcqT/fUdR2ndyuxOsmEkYD6ytpxdPGWm', '5c732a72ee21bac317fe411323d37126')[0m
+  [1m[35m (55.4ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/contacts" for ::1 at 2017-12-07 11:02:21 +1000
+  [1m[36mModels::Key Load (2.2ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = '2e089ca96fad13ef2041f85e359a74e8' LIMIT 1[0m
+  [1m[36mModels::Contact Load (0.3ms)[0m  [1m[34mSELECT `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = '5c732a72ee21bac317fe411323d37126'[0m
+Started POST "/contact" for ::1 at 2017-12-07 11:04:13 +1000
+  [1m[36mModels::Key Load (0.4ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = '2e089ca96fad13ef2041f85e359a74e8' LIMIT 1[0m
+  [1m[36mModels::Contact Load (0.4ms)[0m  [1m[34mSELECT  `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = '5c732a72ee21bac317fe411323d37126' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('5c732a72ee21bac317fe411323d37126', 'nig', '1234123123')[0m
+  [1m[35m (35.0ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/register" for ::1 at 2017-12-07 11:32:01 +1000
+  [1m[36mModels::Account Load (0.4ms)[0m  [1m[34mSELECT `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'raymond'[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `username`, `password`, `created`) VALUES ('05fc328b5cc7746cdf5bbadaa8657440', 'raymond', '$2a$10$0RL3Q9doX0tufaCC//.ou.sJoTdhqsz2X4jDKbVW0OI78DETdTNqe', '2017-12-07 01:32:01')[0m
+  [1m[35m (44.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (7.3ms)[0m  [1m[32mINSERT INTO `profiles` (`user_id`, `name`) VALUES ('05fc328b5cc7746cdf5bbadaa8657440', 'raymond')[0m
+  [1m[35m (41.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (20.4ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('05fc328b5cc7746cdf5bbadaa8657440', 'raymond', '4321321321')[0m
+  [1m[35m (48.5ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/login" for ::1 at 2017-12-07 11:32:31 +1000
+  [1m[36mModels::Account Load (0.8ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'raymond' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO `keys` (`key`, `secret`, `user_id`) VALUES ('d22d3faedca3edbb3196c7b3ce33dbc1', '$2a$10$HLcOtHswmOqAjTj9lwqZ8.C3nv3o1owv1unfy31DUsGdpkGO7zs6.', '05fc328b5cc7746cdf5bbadaa8657440')[0m
+  [1m[35m (22.6ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/contacts" for ::1 at 2017-12-07 11:32:31 +1000
+  [1m[36mModels::Key Load (0.8ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = 'd22d3faedca3edbb3196c7b3ce33dbc1' LIMIT 1[0m
+  [1m[36mModels::Contact Load (0.3ms)[0m  [1m[34mSELECT `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = '05fc328b5cc7746cdf5bbadaa8657440'[0m
+Started POST "/contact" for ::1 at 2017-12-07 11:32:59 +1000
+  [1m[36mModels::Key Load (0.4ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = 'd22d3faedca3edbb3196c7b3ce33dbc1' LIMIT 1[0m
+  [1m[36mModels::Contact Load (0.5ms)[0m  [1m[34mSELECT  `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = '05fc328b5cc7746cdf5bbadaa8657440' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('05fc328b5cc7746cdf5bbadaa8657440', 'user1', '124567890')[0m
+  [1m[35m (15.3ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/register" for 127.0.0.1 at 2018-02-07 14:24:17 +1000
+  [1m[35m (109.8ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[36mModels::Account Load (9.0ms)[0m  [1m[34mSELECT `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'user1'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (38.9ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `username`, `password`, `created`) VALUES ('b29422dca193e2b0e11fbb6e8d97725f', 'user1', '$2a$10$NFtyitbGDHjJkRhv5cS1..xjIH3xFFcxEIeY.rfWY30e8AlbBkDMK', '2018-02-07 04:24:22')[0m
+  [1m[35m (37.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO `profiles` (`user_id`, `name`) VALUES ('b29422dca193e2b0e11fbb6e8d97725f', 'raymond')[0m
+  [1m[35m (42.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('b29422dca193e2b0e11fbb6e8d97725f', 'raymond', '1234567890')[0m
+  [1m[35m (20.2ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/login" for 127.0.0.1 at 2018-02-07 14:24:28 +1000
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[36mModels::Account Load (1.4ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'user1' LIMIT 1[0m
+Started POST "/login" for 127.0.0.1 at 2018-02-07 14:24:30 +1000
+  [1m[36mModels::Account Load (0.3ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`username` = 'user1' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (11.5ms)[0m  [1m[32mINSERT INTO `keys` (`key`, `secret`, `user_id`) VALUES ('f7c9243dd6d7435da95d3ff7b729311e', '$2a$10$AyvMukHPnZO.zoqRJO0QWuVL6xkz4kHLb.uL8bXY03e933xOTyXdi', 'b29422dca193e2b0e11fbb6e8d97725f')[0m
+  [1m[35m (25.7ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/contacts" for 127.0.0.1 at 2018-02-07 14:24:31 +1000
+  [1m[36mModels::Key Load (0.3ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = 'f7c9243dd6d7435da95d3ff7b729311e' LIMIT 1[0m
+  [1m[36mModels::Contact Load (24.2ms)[0m  [1m[34mSELECT `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = 'b29422dca193e2b0e11fbb6e8d97725f'[0m
+Started POST "/contact" for 127.0.0.1 at 2018-02-07 14:24:37 +1000
+  [1m[36mModels::Key Load (0.3ms)[0m  [1m[34mSELECT  `keys`.* FROM `keys` WHERE `keys`.`key` = 'f7c9243dd6d7435da95d3ff7b729311e' LIMIT 1[0m
+  [1m[36mModels::Contact Load (0.5ms)[0m  [1m[34mSELECT  `contacts`.* FROM `contacts` WHERE `contacts`.`user_id` = 'b29422dca193e2b0e11fbb6e8d97725f' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (8.2ms)[0m  [1m[32mINSERT INTO `contacts` (`user_id`, `name`, `number`) VALUES ('b29422dca193e2b0e11fbb6e8d97725f', '1', '16015421')[0m
+  [1m[35m (46.8ms)[0m  [1m[35mCOMMIT[0m
